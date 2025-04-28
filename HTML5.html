@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Balogh Gergő Web programozás beadandó feladat</title>
+    <link type="text/css" rel="stylesheet" href="style.css">
+    <style>
+        #div1, #div2 {
+            float: left;
+            width: 400px;
+            height: 300px;
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid #aaaaaa;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1 class="header">Web-programozás-1 Előadás Házi feladat</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Kezdőlap</a></li>
+            <li><a href="tablazat.html">Táblázat</a></li>
+            <li><a href="HTML5.html" class="active">HTML5</a></li>
+            <li><a href="chartjs.html">ChartJS</a></li>
+            <li><a href="ajax.html">AJAX</a></li>
+            <li><a href="oojs.html">OOJS</a></li>
+        </ul>
+    </nav>
+
+    <div id="content">
+        
+        <h1>SessionStorage példa</h1>
+        <p>Frissítsd az oldalt, amivel növeled a számot.</p>
+        <p>Zárd be az oldalt és nyisd újra az eredményhez.</p>
+        <script type="text/javascript">
+            if (sessionStorage.hits)
+                sessionStorage.hits = Number(sessionStorage.hits) + 1;
+            else
+                sessionStorage.hits = 0;
+            document.write("Total Hits :" + sessionStorage.hits);
+        </script>
+
+        <h1>LocalStorage példa</h1>
+        <p>Frissítsd az oldalt, amivel növeled a számot.</p>
+        <p>Zárd be az oldalt és nyisd újra az eredményhez.</p>
+        <script type="text/javascript">
+            if (localStorage.hits)
+                localStorage.hits = Number(localStorage.hits) + 1;
+            else
+                localStorage.hits = 0;
+            document.write("Total Hits :" + localStorage.hits);
+        </script>
+
+        <h1>Web Worker példa</h1>
+        <p>Az alábbi két példán látható a Web Worker működése.</p>
+
+        <script>
+            function bigLoop() {
+                if (typeof (Worker) !== "undefined") {
+                    var worker = new Worker('webworker.js');
+                    worker.onmessage = function (event) {
+                        alert("Lefutott " + event.data + " ismétlés");
+                    };
+                } else {
+                    alert("A böngésződ nem támogatja a Web Workert.");
+                }
+            }
+            function sayHello() {
+                alert("Hello!");
+            }
+        </script>
+
+        <input type="button" onclick="bigLoop();" value="Hosszú ciklus">
+        <input type="button" onclick="sayHello();" value="Hello">
+
+        <h1>Web Worker nélküli példa</h1>
+        <p>Az alábbi két példán látható a Web Worker nélküli működés.</p>
+
+        <script>
+            function bigLoop() {
+                for (var i = 0; i <= 10000000000; i += 1)
+                    var j = i;
+                alert("Végrehajtva " + j + " ismétlés");
+            }
+            function sayHello() {
+                alert("Hello");
+            }
+        </script>
+
+        <input type="button" onclick="bigLoop();" value="Ciklus">
+        <input type="button" onclick="sayHello();" value="Üdvözlés">
+
+        <h1>Server Sent Events példa</h1>
+        <p>Az alábbi példán látható a Server Sent Events (SSE) működése:</p>
+
+        <div id="result"></div>
+
+        <script>
+            const x = document.getElementById("result");
+            if (typeof (EventSource) !== "undefined") {
+                var source = new EventSource("sse.php");
+                source.onmessage = function (event) {
+                    x.innerHTML += event.data + "<br>";
+                };
+            } else {
+                x.innerHTML = "Sorry, no support for server-sent events.";
+            }
+        </script>
+
+        <h1>Drag and Drop példa</h1>
+        <p>Az alábbi példán látható a Drag and Drop működése: (Húzd egyik helyről a másikra a képet.)</p>
+
+        <div id="dragdrop-container">
+            <script>
+                function allowDrop(ev) {
+                    ev.preventDefault();
+                }
+
+                function drag(ev) {
+                    ev.dataTransfer.setData("text", ev.target.id);
+                }
+
+                function drop(ev) {
+                    ev.preventDefault();
+                    var data = ev.dataTransfer.getData("text");
+                    ev.target.appendChild(document.getElementById(data));
+                }
+            </script>
+
+            <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <img src="nje.png" draggable="true" ondragstart="drag(event)" id="drag1" width="400" height="300">
+            </div>
+
+            <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+
+            <div style="clear: both;"></div>
+        </div>
+
+        <h1>Canvas példa</h1>
+        <p>Az alábbi példán látható egy Canvas elem.</p>
+
+        <canvas id="myCanvas" width="400" height="200" style="border:1px solid #000000;">
+            
+        </canvas>
+
+        <script>
+            var c = document.getElementById("myCanvas");
+            var ctx = c.getContext("2d");
+            ctx.fillStyle = "#FF0000";
+            ctx.fillRect(50, 50, 150, 100);
+        </script>
+
+        <h1>SVG példa</h1>
+        <p>Az alábbi példán látható egy SVG elem.</p>
+
+        <svg width="400" height="180">
+            <rect width="300" height="100" style="fill:rgb(255, 0, 0);stroke-width:3;stroke:rgb(0,0,0)" />
+           
+        </svg>
+
+    </div>
+
+    <footer>Balogh Gergő Q908G2</footer>
+</body>
+</html>

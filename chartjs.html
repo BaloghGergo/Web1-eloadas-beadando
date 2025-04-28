@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Balogh Gergő Web programozás beadandó feladat</title>
+    <link type="text/css" rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 50%;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+        }
+        tr:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="header">Web-programozás-1 Előadás Házi feladat</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="index.html" >Kezdőlap</a></li>
+            <li><a href="tablazat.html">Táblázat</a></li>
+            <li><a href="HTML5.html">HTML5</a></li>
+            <li><a href="chartjs.html" class="active">ChartJS</a></li>
+            <li><a href="ajax.html">AJAX</a></li>
+            <li><a href="oojs.html">OOJS</a></li>
+        </ul>
+    </nav>
+    <aside>
+        <h1>Tartalom</h1>
+    </aside>
+    <section>
+        <h1>ChartJS</h1>
+
+        <!-- Táblázat -->
+        <h2>Válassz ki egy sort a táblázatból:</h2>
+
+        <table id="data-table">
+          <tbody>
+            <!-- A táblázatot JavaScript tölti fel -->
+          </tbody>
+        </table>
+
+        <!-- Diagram -->
+        <canvas id="lineChart" width="600" height="400"></canvas>
+
+        <script>
+          const table = document.getElementById('data-table').querySelector('tbody');
+
+          // Táblázat generálása (5x5 véletlen számokkal)
+          for (let i = 0; i < 5; i++) {
+            const row = document.createElement('tr');
+            for (let j = 0; j < 5; j++) {
+              const cell = document.createElement('td');
+              cell.textContent = Math.floor(Math.random() * 100);
+              row.appendChild(cell);
+            }
+            table.appendChild(row);
+          }
+
+          let chart;
+
+          // Sorok kattintásának kezelése
+          table.addEventListener('click', function(event) {
+            const clickedRow = event.target.parentElement;
+            const data = Array.from(clickedRow.children).map(td => Number(td.textContent));
+
+            if (chart) {
+              chart.destroy();
+            }
+
+            const ctx = document.getElementById('lineChart').getContext('2d');
+            chart = new Chart(ctx, {
+              type: 'line',
+              data: {
+                labels: data.map((_, index) => `Adat ${index + 1}`),
+                datasets: [{
+                  label: 'Kiválasztott sor adatai',
+                  data: data,
+                  borderColor: 'blue',
+                  backgroundColor: 'lightblue',
+                  tension: 0.3
+                }]
+              },
+              options: {
+                responsive: true,
+                scales: {
+                  y: {
+                    beginAtZero: true
+                  }
+                }
+              }
+            });
+          });
+        </script>
+        
+    </section>
+    <footer>Balogh Gergő Q908G2</footer>
+</body>
+</html>
